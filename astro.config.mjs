@@ -10,5 +10,5 @@ export default defineConfig({
             rehypePlugins: [[rehypeKatex, { output: 'html' }]],
         }),
     },
-    site: "https://jkhansell.github.io/portfolio/",
+    site: "https://jkhansell.github.io/portfolio_astro/",
 });
