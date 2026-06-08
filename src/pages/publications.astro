@@ -1,0 +1,202 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import PublicationItem from '@/components/PublicationItem.astro';
+// 1. Import your JSON file directly
+import publicationsData from '@/data/publications.json';
+const { preprints, journals, conferences } = publicationsData;
+
+// Optional: If you want to make absolutely sure your categories are sorted from 
+// newest to oldest by year, you can run a quick dynamic sort here:
+const sortedPreprints = preprints.sort((a, b) => b.year - a.year);
+const sortedJournals = journals.sort((a, b) => b.year - a.year);
+const sortedConferences = conferences.sort((a, b) => b.year - a.year);
+
+// 1. Calculate publication count dynamically from your JSON arrays
+const totalPublications = preprints.length + journals.length + conferences.length;
+
+// 2. Keep metrics that platforms can't track static here
+const publicationStats = {
+  citations: 2,
+  hIndex: 1,
+  nPublications: totalPublications
+};
+
+---
+
+<Layout title="Publications" description="Scholarly articles, peer-reviewed conference publications, and preprints by Johansell Villalobos. Includes BibTeX entries and abstract details.">
+  
+  <section class="publications-section section-padding">
+    <div class="container animate-fade">
+      <div class="section-header">
+        <h1 class="page-title"><span class="gradient-text">Publications</span></h1>
+        <p class="section-subtitle">A list of peer-reviewed journal papers, conference proceedings, and preprints.</p>
+      </div>
+
+      <!-- Google Scholar Metrics Banner -->
+      <div class="metrics-wrapper glass-container select-none">
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <span class="metric-val">{publicationStats.citations}</span>
+            <span class="metric-lbl">Total Citations</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">{publicationStats.hIndex}</span>
+            <span class="metric-lbl">h-index</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">{publicationStats.nPublications}</span>
+            <span class="metric-lbl">Publications</span>
+          </div>
+          <div class="metric-box">
+            <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" class="scholar-link-block">
+              <span>Google Scholar Profile</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categorized Lists -->
+      <div class="publications-list-wrapper">
+        
+        <!-- Preprints -->
+        <div class="pub-group animate-slide-up">
+          <h2 class="group-title">Preprints</h2>
+          <div class="pub-items-grid">
+            {sortedPreprints.map(pub => (
+              <PublicationItem {...pub} />
+            ))}
+          </div>
+        </div>
+
+        <!-- Journal Articles -->
+        <div class="pub-group animate-slide-up animation-delay-100">
+          <h2 class="group-title">Journal Articles</h2>
+          <div class="pub-items-grid">
+            {sortedJournals.map(pub => (
+              <PublicationItem {...pub} />
+            ))}
+          </div>
+        </div>
+
+        <!-- Refereed Conference Papers -->
+        <div class="pub-group animate-slide-up animation-delay-200">
+          <h2 class="group-title">Conference Proceedings</h2>
+          <div class="pub-items-grid">
+            {sortedConferences.map(pub => (
+              <PublicationItem {...pub} />
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .gradient-text {
+    color: var(--accent);
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Metrics Banner */
+  .metrics-wrapper {
+    margin-bottom: 4rem;
+    padding: 1.5rem 2rem;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .metrics-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .metric-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .metric-val {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .metric-lbl {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+  }
+
+  .scholar-link-block {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--primary);
+    border: 1px dashed rgba(99, 102, 241, 0.3);
+    transition: var(--transition-fast);
+  }
+
+  .scholar-link-block:hover {
+    color: #ffffff;
+    background: rgba(99, 102, 241, 0.1);
+    border-style: solid;
+    border-color: var(--primary);
+  }
+
+  /* Pub Groups */
+  .pub-group {
+    margin-bottom: 3.5rem;
+  }
+
+  .group-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--primary);
+    padding-left: 1rem;
+    line-height: 1.2;
+  }
+
+  .pub-items-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+</style>

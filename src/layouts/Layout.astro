@@ -1,0 +1,88 @@
+---
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+import '@/styles/global.css';
+
+// Math LaTeX
+import 'katex/dist/katex.min.css';
+
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Scientific Computing & HPC Portfolio", 
+  description = "Welcome to my academic research and scientific computing portfolio. Explore projects, publications, collaborations, and conference presentations in high-performance computational models." 
+} = Astro.props;
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title} | Portfolio</title>
+    <meta name="title" content={`${title} | Portfolio`} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={`${title} | Portfolio`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${baseUrl}/og-image.png`} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={`${title} | Portfolio`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={`${baseUrl}/og-image.png`} />
+
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Theme Initializer: Runs synchronously to prevent theme flashing (FOUC) -->
+    <script is:inline>
+      (function() {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light') {
+          document.documentElement.classList.add('light-theme');
+        } else if (storedTheme === 'dark') {
+          document.documentElement.classList.remove('light-theme');
+        } else {
+          // Default to dark theme for scientific developer aesthetic
+          document.documentElement.classList.remove('light-theme');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    padding-top: 80px; /* Offset for sticky header */
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+  }
+</style>

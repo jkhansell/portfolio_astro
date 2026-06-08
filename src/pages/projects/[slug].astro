@@ -1,0 +1,185 @@
+---
+// src/pages/projects/[slug].astro
+import { getCollection, render, getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import 'katex/dist/katex.min.css'; // Essential: provides typography alignments for LaTeX rendering
+
+export const prerender = true;
+
+// 1. Tell Astro v6 to generate static pages based on your markdown file names (IDs)
+export async function getStaticPaths() {
+  const projectEntries = await getCollection('projects');
+  
+  return projectEntries.map(entry => ({
+    params: { slug: entry.id }, 
+    props: { entry },
+  }));
+}
+
+// 2. Extract the matched project properties from Astro's runtime parameters
+const { entry } = Astro.props;
+const { Content } = await render(entry); // This unpacks text, inline arrays, and math expressions
+---
+
+<Layout title={`${entry.data.title} | Case Study`} description={entry.data.description}>
+  <article class="case-study-wrapper">
+    
+    <nav class="case-study-nav animate-fade">
+      <a href="/projects" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Projects
+      </a>
+    </nav>
+
+    <header class="case-study-header animate-fade">
+      <span class="category-badge">{entry.data.category}</span>
+      <h1 class="project-title">{entry.data.title}</h1>
+      <p class="project-summary">{entry.data.description}</p>
+      
+      <div class="project-meta-tags">
+        {entry.data.tags.map(tag => (
+          <span class="meta-tag">#{tag}</span>
+        ))}
+      </div>
+    </header>
+    
+    <div class="markdown-body animate-slide-up">
+      <Content />
+    </div>
+
+  </article>
+</Layout>
+
+<style>
+  .case-study-wrapper {
+    max-width: 950px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Breadcrumb Styles */
+  .case-study-nav {
+    margin-bottom: 2.5rem;
+  }
+  
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  
+  .back-link:hover {
+    color: var(--primary);
+  }
+
+  /* Header Details */
+  .case-study-header {
+    margin-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 2.5rem;
+  }
+
+  .category-badge {
+    font-family: var(--font-title);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+
+  .project-title {
+    font-family: var(--font-title);
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    margin-top: 0.5rem;
+  }
+
+  .project-summary {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+  }
+
+  .project-meta-tags {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .meta-tag {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--primary);
+  }
+
+  /* ------------------------------------------------------------- */
+  /* Markdown Rendering Core Styles (Captures injected elements)    */
+  /* ------------------------------------------------------------- */
+  
+  .markdown-body :global(h2) {
+    font-family: var(--font-title);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .markdown-body :global(h3) {
+    font-family: var(--font-title);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .markdown-body :global(p) {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  /* LaTeX Mathematical Display Blocks Custom Styling */
+  .markdown-content :global(.katex-display),
+  .markdown-body :global(.katex-display) {
+    margin: 2.5rem 0;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    overflow-x: auto; /* Handles massive matrix or vector arrays on mobile views */
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Inline Math Elements ($e=mc^2$) adjustments */
+  .markdown-body :global(.katex) {
+    font-size: 1.3em; 
+    color: #ffffff;
+  }
+
+  /* Premium Code Syntax Highlighting Blocks */
+  .markdown-body :global(pre) {
+    padding: 1.5rem;
+    border-radius: 10px;
+    background: rgba(18, 18, 20, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+
+  .markdown-body :global(code) {
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+</style>

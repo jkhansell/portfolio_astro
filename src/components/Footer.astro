@@ -1,0 +1,222 @@
+---
+import { SITE_METADATA } from '@/config';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+const year = new Date().getFullYear();
+
+const navItems = [
+  { label: "Home", href: `${baseUrl}/` },
+  { label: "Projects", href: `${baseUrl}/projects` },
+  //{ label: "Collaboration", href: `${baseUrl}/collaboration` },
+  { label: "Publications", href: `${baseUrl}/publications` },
+  //{ label: "Conferences", href: `${baseUrl}/conferences` }
+];
+
+
+const socials = [
+  { 
+    name: "GitHub", 
+    href: SITE_METADATA.socials.github, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>`
+  },
+  { 
+    name: "LinkedIn", 
+    href: SITE_METADATA.socials.linkedin, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9" rx="1"></rect><circle cx="4" cy="4" r="2"></circle></svg>`
+  },
+  { 
+    name: "Scholar", 
+    href: SITE_METADATA.socials.scholar, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l3.4 1.555v3.42a2 2 0 0 0 1.06 1.77l4 2.134a2 2 0 0 0 1.88 0l4-2.134a2 2 0 0 0 1.06-1.77v-3.42z"></path><path d="M6 13.11V19a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5.89"></path></svg>`
+  },
+  { 
+    name: "Email", 
+    href: `mailto:${SITE_METADATA.email}`, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`
+  }, 
+  {
+    name: "ORCID", 
+    href: SITE_METADATA.socials.orcid,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" class="orcid-icon"><path d="M256,128c0,70.7-57.3,128-128,128C57.3,256,0,198.7,0,128C0,57.3,57.3,0,128,0C198.7,0,256,57.3,256,128z"/><path d="M86.3,186.2H70.9V79.1h15.4v48.4V186.2z M108.9,79.1h41.6c39.6,0,57,28.3,57,53.6c0,27.5-21.5,53.6-56.8,53.6h-41.8V79.1z M124.3,172.4h24.5c34.9,0,42.9-26.5,42.9-39.7c0-21.5-13.7-39.7-43.7-39.7h-23.7V172.4z M88.7,56.8c0,5.5-4.5,10.1-10.1,10.1c-5.6,0-10.1-4.6-10.1-10.1c0-5.6,4.5-10.1,10.1-10.1C84.2,46.7,88.7,51.3,88.7,56.8z" fill="var(--site-bg)"/></svg>`
+  }
+].filter(item => item.href);
+---
+
+<footer class="glass-footer">
+  <div class="container footer-grid">
+    <!-- Bio / Brand Column -->
+    <div class="footer-col brand-col">
+      <h3 class="footer-title">
+        <span class="logo-accent">&lt;</span>
+        {SITE_METADATA.name}
+        <span class="logo-accent">/&gt;</span>
+      </h3>
+      <p class="footer-desc">
+        {SITE_METADATA.bio}
+      </p>
+    </div>
+
+    <!-- Quick Links Column -->
+    <div class="footer-col links-col">
+      <h4 class="footer-heading">Sitemap</h4>
+      <nav class="footer-links">
+        {navItems.map(item => (
+          <a href={item.href} class="footer-link">{item.label}</a>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Contact Column -->
+    <div class="footer-col contact-col">
+      <h4 class="footer-heading">Connect</h4>
+      <p class="contact-email">{SITE_METADATA.email}</p>
+      <div class="footer-socials">
+        {socials.map(social => (
+          <a 
+            href={social.href} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="footer-social-btn" 
+            aria-label={social.name}
+            set:html={social.svg}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-container">
+      <p class="copyright">&copy; {year} {SITE_METADATA.name}. All rights reserved.</p>
+      <p class="tagline">Built with Astro v6 &amp; Vanilla CSS</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .glass-footer {
+    background: rgba(3, 7, 18, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border-glass);
+    padding: 4rem 0 2rem 0;
+    margin-top: auto;
+    z-index: 10;
+    position: relative;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1fr 1.5fr;
+    }
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .footer-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .logo-accent {
+    color: var(--primary);
+  }
+
+  .footer-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  .footer-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-link {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    width: fit-content;
+  }
+
+  .footer-link:hover {
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  .contact-email {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .footer-social-btn {
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid var(--border-glass);
+    background: rgba(255, 255, 255, 0.02);
+    transition: var(--transition-fast);
+  }
+
+  .footer-social-btn:hover {
+    color: #ffffff;
+    border-color: var(--border-glass-hover);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1.5rem;
+  }
+
+  .footer-bottom-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-bottom-container {
+      flex-direction: row;
+    }
+  }
+
+  .copyright, .tagline {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+</style>

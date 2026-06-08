@@ -1,0 +1,99 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ConferenceItem from '@/components/ConferenceItem.astro';
+
+const events = [
+  {
+    title: "Robustness Bounds in AutoML Systems",
+    event: "International Conference on Machine Learning (ICML)",
+    date: "July 24, 2026",
+    location: "Vienna, Austria",
+    role: "Keynote Speaker",
+    link: "https://icml.cc",
+    slides: "#"
+  },
+  {
+    title: "Panel Discussion: Future of Hardware-Aware Neural Architecture Search",
+    event: "NeurIPS AutoML Workshop",
+    date: "December 14, 2025",
+    location: "Vancouver, Canada",
+    role: "Panelist",
+    link: "https://neurips.cc"
+  },
+  {
+    title: "Certifiable Bounds for Multimodal Vision-Language Embeddings",
+    event: "Conference on Computer Vision and Pattern Recognition (CVPR)",
+    date: "June 21, 2025",
+    location: "Seattle, USA",
+    role: "Presenter",
+    link: "https://cvpr.thecvf.com",
+    slides: "#"
+  },
+  {
+    title: "Robust AutoML Models and Mathematical Verification Bounds",
+    event: "University of Tokyo Academic Seminar",
+    date: "October 11, 2024",
+    location: "Tokyo, Japan",
+    role: "Invited Lecturer",
+    slides: "#"
+  },
+  {
+    title: "Efficient Architecture Search on Edge TPU Devices",
+    event: "IEEE Edge-AI Summit",
+    date: "March 18, 2024",
+    location: "San Jose, USA",
+    role: "Poster Presenter",
+    link: "https://ieee.org"
+  }
+];
+---
+
+<Layout title="Conferences & Talks" description="A timeline of academic presentations, invited lectures, and workshop panels by Alex Carter. Includes links to slides.">
+  
+  <section class="conferences-section section-padding">
+    <div class="container animate-fade">
+      <div class="section-header">
+        <h1 class="page-title"><span class="gradient-text">Conferences &amp; Presentations</span></h1>
+        <p class="section-subtitle">Chronological record of keynotes, paper presentations, panels, and invited academic lectures.</p>
+      </div>
+
+      <!-- Timeline Wrapper -->
+      <div class="timeline-container select-none">
+        <div class="timeline">
+          {events.map(event => (
+            <ConferenceItem {...event} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .gradient-text {
+    color: var(--accent);
+  }
+
+  .section-header {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .timeline-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+</style>

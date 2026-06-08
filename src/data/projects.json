@@ -1,0 +1,72 @@
+[
+    {
+        "title": "Robust Neural Architecture Search",
+        "description": "Investigating safety bounds and adversarially robust objective functions for automated deep neural network design. Designed a search space that natively rejects unstable architectures.",
+        "tags": [
+            "PyTorch",
+            "AutoML",
+            "Robustness",
+            "Python"
+        ],
+        "category": "Research",
+        "github": "https://github.com",
+        "paper": "#",
+        "slug": "robust-neural-architecture-search"
+    },
+    {
+        "title": "DeepSpeed Inference Optimizer",
+        "description": "A high-efficiency compilation pipeline for transformer inference optimization on limited GPU hardware. Achieved 2.4x throughput increase using custom CUDA kernels.",
+        "tags": [
+            "CUDA",
+            "C++",
+            "PyTorch",
+            "Triton"
+        ],
+        "category": "Software",
+        "github": "https://github.com",
+        "demo": "https://example.com",
+        "slug": "deepspeed-inference-optimizer"
+    },
+    {
+        "title": "Safety Bounds for Vision-Language Models",
+        "description": "Formulating mathematical verification bounds to guarantee alignment and prevent prompt injection breaches in multimodal embeddings. Introduced JAX-based optimization constraints.",
+        "tags": [
+            "JAX",
+            "VLM",
+            "Optimization",
+            "Python"
+        ],
+        "category": "Research",
+        "github": "https://github.com",
+        "paper": "#",
+        "slug": "safety-bounds-for-vision-language-models"
+    },
+    {
+        "title": "Lego-Diff: Auto-diff Engine in Rust",
+        "description": "An educational, zero-dependency reverse-mode automatic differentiation engine compiled to WebAssembly. Features interactive graph visualizations of computational nodes.",
+        "tags": [
+            "Rust",
+            "Wasm",
+            "TypeScript",
+            "Algorithms"
+        ],
+        "category": "Software",
+        "github": "https://github.com",
+        "demo": "https://example.com",
+        "slug": "lego-diff-auto-diff-engine-in-rust"
+    },
+    {
+        "title": "Hardware-Aware NAS for Edge TPU",
+        "description": "A latency-constrained architecture search targeting low-power Google Edge TPU chips. Leveraged evolutionary search algorithms to find optimal speed-accuracy tradeoffs.",
+        "tags": [
+            "TensorFlow",
+            "Edge-AI",
+            "NAS",
+            "Python"
+        ],
+        "category": "Research",
+        "github": "https://github.com",
+        "paper": "#",
+        "slug": "robust-nas"
+    }
+]

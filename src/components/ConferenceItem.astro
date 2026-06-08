@@ -1,0 +1,115 @@
+---
+interface Props {
+  title: string;
+  event: string;
+  date: string;
+  location: string;
+  role: string;
+  link?: string;
+  slides?: string;
+}
+
+const { title, event, date, location, role, link, slides } = Astro.props;
+---
+
+<div class="timeline-item">
+  <div class="glass-container conference-card">
+    <div class="glass-card">
+      <div class="conf-meta">
+        <span class="badge badge-accent conf-role">{role}</span>
+        <span class="conf-date">{date}</span>
+      </div>
+      
+      <h3 class="conf-title">
+        {link ? (
+          <a href={link} target="_blank" rel="noopener noreferrer" class="conf-link">
+            {title}
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="external-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </a>
+        ) : (
+          title
+        )}
+      </h3>
+      
+      <p class="conf-event-info">
+        <strong>{event}</strong> &bull; {location}
+      </p>
+      
+      {slides && (
+        <div class="conf-actions">
+          <a href={slides} target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 7 17 12 12 17 12 7"></polygon></svg>
+            View Slides
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .conference-card {
+    transition: var(--transition-normal);
+  }
+
+  .conf-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .conf-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .conf-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .conf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .conf-link:hover {
+    color: var(--primary);
+  }
+
+  .external-icon {
+    opacity: 0.6;
+    transition: transform var(--transition-fast);
+  }
+
+  .conf-link:hover .external-icon {
+    transform: translate(2px, -2px);
+    opacity: 1;
+  }
+
+  .conf-event-info {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .conf-actions {
+    margin-top: 1rem;
+    display: flex;
+  }
+
+  .btn-xs {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    gap: 0.35rem;
+  }
+</style>

@@ -1,0 +1,290 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const partnerships = [
+  {
+    institution: "University College London (UCL)",
+    location: "London, United Kingdom",
+    project: "Privacy-Preserving Federated Learning in HPC",
+    duration: "2024 - Present",
+    funding: "Horizon Europe Grant",
+    status: "Active Research",
+    details: "Developing decentralized neural search strategies that respect data privacy boundaries across high-performance computing clusters. Co-authoring a joint framework for safe differential privacy."
+  },
+  {
+    institution: "Technical University of Munich (TUM)",
+    location: "Munich, Germany",
+    project: "Physics-Informed Deep Learning & Symbolic Integration",
+    duration: "2023 - 2025",
+    funding: "DAAD Exchange Program",
+    status: "Joint Publications",
+    details: "Integrating formal physical constraints into differentiable search spaces. Enabled verification of fluid dynamic safety bounds inside neural architecture search iterations."
+  },
+  {
+    institution: "University of Tokyo",
+    location: "Tokyo, Japan",
+    project: "High-Performance Compilers for Edge TPU Neural Models",
+    duration: "2024 - Present",
+    funding: "JSPS Collaborative Grant",
+    status: "Active Research",
+    details: "Optimizing automated neural compilation for microcontrollers and Edge TPUs used in robotics and real-time environment mapping."
+  },
+  {
+    institution: "McGill University / Mila",
+    location: "Montreal, Canada",
+    project: "Lipschitz Stability Bounds for Neural ODE Solvers",
+    duration: "2022 - 2024",
+    funding: "NSERC Research Partnership",
+    status: "Completed (Visiting Researcher)",
+    details: "Three-month research visit to Mila AI institute. Investigated Lipschitz stability bounds on transformer self-attention layers to prove robustness boundaries."
+  }
+];
+---
+
+<Layout title="International Collaboration" description="Explore the international research network and academic partnerships of Alex Carter in High-Performance & Scientific Computing.">
+  
+  <section class="collaboration-section section-padding">
+    <div class="container animate-fade">
+      <div class="section-header">
+        <h1 class="page-title"><span class="gradient-text">Global Scientific Network</span></h1>
+        <p class="section-subtitle">Fostering breakthrough discoveries through international collaborations, joint computational research grants, and exchange visits.</p>
+      </div>
+
+      <!-- Animated Connection SVG Visualization -->
+      <div class="map-wrapper glass-container select-none">
+        <svg class="collab-map" viewBox="0 0 800 400" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--secondary)" />
+              <stop offset="100%" stop-color="var(--primary)" />
+            </linearGradient>
+            <filter id="glow-light" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+          
+          <!-- Styled grid representing latitude/longitude - dynamically colored -->
+          <g stroke="var(--map-grid-color)" stroke-width="1">
+            <line x1="0" y1="50" x2="800" y2="50" />
+            <line x1="0" y1="100" x2="800" y2="100" />
+            <line x1="0" y1="150" x2="800" y2="150" />
+            <line x1="0" y1="200" x2="800" y2="200" />
+            <line x1="0" y1="250" x2="800" y2="250" />
+            <line x1="0" y1="300" x2="800" y2="300" />
+            <line x1="0" y1="350" x2="800" y2="350" />
+            
+            <line x1="100" y1="0" x2="100" y2="400" />
+            <line x1="200" y1="0" x2="200" y2="400" />
+            <line x1="300" y1="0" x2="300" y2="400" />
+            <line x1="400" y1="0" x2="400" y2="400" />
+            <line x1="500" y1="0" x2="500" y2="400" />
+            <line x1="600" y1="0" x2="600" y2="400" />
+            <line x1="700" y1="0" x2="700" y2="400" />
+          </g>
+
+          <!-- Animated Connection Lines from Central Hub (Chicago / Montreal Area approx 240, 140) -->
+          <!-- Montreal to London (390, 110) -->
+          <path class="pulse-line" d="M 240 140 Q 315 100 390 110" stroke="url(#mapGradient)" stroke-width="1.5" />
+          <!-- Montreal to Munich (430, 125) -->
+          <path class="pulse-line" d="M 240 140 Q 335 100 430 125" stroke="url(#mapGradient)" stroke-width="1.5" />
+          <!-- Montreal to Tokyo (680, 130) -->
+          <path class="pulse-line" d="M 240 140 Q 460 70 680 130" stroke="url(#mapGradient)" stroke-width="1.5" />
+          
+          <!-- Nodes -->
+          <!-- Central Hub -->
+          <circle cx="240" cy="140" r="6" fill="var(--text-primary)" filter="url(#glow-light)" />
+          <circle cx="240" cy="140" r="12" stroke="var(--primary)" stroke-width="1.5" class="radar-dot" />
+          <text x="240" y="120" fill="var(--text-primary)" font-size="10" font-weight="700" text-anchor="middle" font-family="var(--font-sans)">Home Lab</text>
+
+          <!-- London -->
+          <circle cx="390" cy="110" r="4.5" fill="var(--accent)" filter="url(#glow-light)" />
+          <text x="390" y="95" fill="var(--text-secondary)" font-size="9" text-anchor="middle" font-family="var(--font-sans)">UCL (London)</text>
+
+          <!-- Munich -->
+          <circle cx="430" cy="125" r="4.5" fill="var(--accent)" filter="url(#glow-light)" />
+          <text x="430" y="145" fill="var(--text-secondary)" font-size="9" text-anchor="middle" font-family="var(--font-sans)">TUM (Munich)</text>
+
+          <!-- Tokyo -->
+          <circle cx="680" cy="130" r="4.5" fill="var(--accent)" filter="url(#glow-light)" />
+          <text x="680" y="115" fill="var(--text-secondary)" font-size="9" text-anchor="middle" font-family="var(--font-sans)">U Tokyo</text>
+        </svg>
+      </div>
+
+      <!-- Partners Grid -->
+      <div class="grid-2 partners-grid">
+        {partnerships.map(partner => (
+          <article class="glass-container partner-card animate-slide-up">
+            <div class="glass-card">
+              <div class="partner-header">
+                <span class="badge badge-accent partner-status">{partner.status}</span>
+                <span class="partner-duration">{partner.duration}</span>
+              </div>
+              
+              <h2 class="partner-institution">{partner.institution}</h2>
+              <p class="partner-location">📍 {partner.location}</p>
+              
+              <div class="partner-project-section">
+                <h4 class="partner-project-title">{partner.project}</h4>
+                <p class="partner-project-desc">{partner.details}</p>
+              </div>
+
+              <div class="partner-footer">
+                <span class="badge font-mono">{partner.funding}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .gradient-text {
+    color: var(--accent);
+  }
+
+  .section-header {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Map Visualizer */
+  .map-wrapper {
+    margin-bottom: 4rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(42, 59, 66, 0.2);
+    transition: background-color var(--transition-normal);
+  }
+
+  html.light-theme .map-wrapper {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .collab-map {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+  }
+
+  .collab-map text {
+    transition: fill var(--transition-normal);
+  }
+
+  /* Animated connection lines */
+  .pulse-line {
+    stroke-dasharray: 8 4;
+    animation: dash 30s linear infinite;
+  }
+
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -1000;
+    }
+  }
+
+  /* Radar pulse circle animation */
+  .radar-dot {
+    transform-origin: 240px 140px;
+    animation: radarPulse 2.5s ease-out infinite;
+  }
+
+  @keyframes radarPulse {
+    0% {
+      transform: scale(0.6);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  /* Partner Cards */
+  .partners-grid {
+    margin-top: 2rem;
+  }
+
+  .partner-card {
+    height: 100%;
+  }
+
+  .partner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .partner-duration {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .partner-institution {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .partner-location {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .partner-project-section {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  html.light-theme .partner-project-section {
+    background: rgba(0, 0, 0, 0.01);
+    border-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .partner-project-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .partner-project-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .partner-footer {
+    display: flex;
+    margin-top: auto;
+  }
+</style>

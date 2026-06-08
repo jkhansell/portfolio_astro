@@ -1,0 +1,479 @@
+---
+import { SITE_METADATA } from '@/config';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { label: "Home", href: `${baseUrl}/` },
+  { label: "Projects", href: `${baseUrl}/projects` },
+  //{ label: "Collaboration", href: `${baseUrl}/collaboration` },
+  { label: "Publications", href: `${baseUrl}/publications` },
+  //{ label: "Conferences", href: `${baseUrl}/conferences` }
+];
+
+const socials = [
+  { 
+    name: "GitHub", 
+    href: SITE_METADATA.socials.github, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>`
+  },
+  { 
+    name: "LinkedIn", 
+    href: SITE_METADATA.socials.linkedin, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9" rx="1"></rect><circle cx="4" cy="4" r="2"></circle></svg>`
+  },
+  { 
+    name: "Scholar", 
+    href: SITE_METADATA.socials.scholar, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M5 12.5V17c0 3 7 4 7 4s7-1 7-4v-4.5"/><path d="M22 7v6"/></svg>`
+  },
+  { 
+    name: "Email", 
+    href: `mailto:${SITE_METADATA.email}`, 
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`
+  }, 
+  {
+    name: "ORCID", 
+    href: SITE_METADATA.socials.orcid,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" style="color: var(--orcid-bg, currentColor);" fill="currentColor"><path d="M256,128c0,70.7-57.3,128-128,128C57.3,256,0,198.7,0,128C0,57.3,57.3,0,128,0C198.7,0,256,57.3,256,128z"/><path d="M86.3,186.2H70.9V79.1h15.4v48.4V186.2z M108.9,79.1h41.6c39.6,0,57,28.3,57,53.6c0,27.5-21.5,53.6-56.8,53.6h-41.8V79.1z M124.3,172.4h24.5c34.9,0,42.9-26.5,42.9-39.7c0-21.5-13.7-39.7-43.7-39.7h-23.7V172.4z M88.7,56.8c0,5.5-4.5,10.1-10.1,10.1c-5.6,0-10.1-4.6-10.1-10.1c0-5.6,4.5-10.1,10.1-10.1C84.2,46.7,88.7,51.3,88.7,56.8z" fill="var(--bg-main)"/></svg>`
+  }
+].filter(item => item.href);
+
+const isActive = (href: string) => {
+  const cleanCurrent = currentPath.replace(/\/$/, "");
+  const cleanHref = href.replace(/\/$/, "");
+  if (cleanHref === baseUrl) {
+    return cleanCurrent === baseUrl;
+  }
+  return cleanCurrent === cleanHref || cleanCurrent.startsWith(cleanHref + "/");
+};
+---
+
+<header class="glass-header">
+  <div class="container header-container">
+    <a href={`${baseUrl}/`} class="logo">
+      <span class="logo-accent">&lt;</span>
+      {SITE_METADATA.name}
+      <span class="logo-accent">/&gt;</span>
+    </a>
+
+    <!-- Navigation and Socials Group (Desktop) -->
+    <div class="desktop-actions">
+      <nav class="desktop-nav">
+        {navItems.map(item => (
+          <a 
+            href={item.href} 
+            class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <span class="nav-divider"></span>
+
+      <div class="socials-group">
+        {socials.map(social => (
+          <a 
+            href={social.href} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="social-link-btn" 
+            aria-label={social.name}
+            set:html={social.svg}
+          />
+        ))}
+      </div>
+
+      <span class="nav-divider"></span>
+
+      <!-- Theme Switcher Button -->
+      <button class="theme-toggle-btn social-link-btn" aria-label="Toggle Theme">
+        <!-- Sun Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <!-- Moon Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+
+    <!-- Mobile Action Bar Controls -->
+    <div class="mobile-controls-group">
+      <!-- Theme Switcher (Always visible on mobile next to menu) -->
+      <button class="theme-toggle-btn social-link-btn mobile-theme-btn" aria-label="Toggle Theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button 
+        id="mobile-menu-btn" 
+        class="mobile-menu-btn" 
+        aria-label="Toggle Menu"
+        aria-expanded="false"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Drawer -->
+  <nav id="mobile-nav" class="mobile-nav">
+    <div class="mobile-nav-links">
+      {navItems.map(item => (
+        <a 
+          href={item.href} 
+          class={`mobile-nav-link ${isActive(item.href) ? 'active' : ''}`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="mobile-socials-group">
+      {socials.map(social => (
+        <a 
+          href={social.href} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="mobile-social-link-btn" 
+          aria-label={social.name}
+          set:html={social.svg}
+        />
+      ))}
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu control
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+      menuBtn.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+
+    const mobileLinks = mobileNav.querySelectorAll('.mobile-nav-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+  }
+
+  // Theme switcher control
+  const themeToggleButtons = document.querySelectorAll('.theme-toggle-btn');
+  themeToggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isLight = document.documentElement.classList.contains('light-theme');
+      if (isLight) {
+        document.documentElement.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+      }
+      
+      // Dispatch event so sub-components (like the collaboration map) can redraw
+      window.dispatchEvent(new Event('theme-changed'));
+    });
+  });
+</script>
+
+<style>
+  .glass-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 100;
+    background: rgba(33, 34, 38, 0.75);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid var(--border-glass);
+    display: flex;
+    align-items: center;
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  html.light-theme .glass-header {
+    background: rgba(244, 246, 245, 0.75);
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .logo {
+    font-family: var(--font-title);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-accent {
+    color: var(--accent);
+    transition: var(--transition-fast);
+  }
+
+  .logo:hover .logo-accent {
+    color: var(--primary);
+    text-shadow: 0 0 10px var(--primary-glow);
+  }
+
+  .desktop-actions {
+    display: none;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .desktop-actions {
+      display: flex;
+    }
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-normal);
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .nav-link.active {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .nav-link.active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--border-glass);
+  }
+
+  .socials-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .social-link-btn {
+    color: var(--text-secondary);
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .social-link-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--border-glass-hover);
+    box-shadow: 0 0 10px var(--primary-glow);
+  }
+
+  html.light-theme .social-link-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  /* Theme Switcher Button SVG swaps */
+  .theme-icon-sun {
+    display: none;
+  }
+  .theme-icon-moon {
+    display: block;
+  }
+  html.light-theme .theme-icon-sun {
+    display: block;
+  }
+  html.light-theme .theme-icon-moon {
+    display: none;
+  }
+
+  /* Mobile menu control layout */
+  .mobile-controls-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-controls-group {
+      display: none;
+    }
+  }
+
+  /* Mobile menu toggle button */
+  .mobile-menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    padding: 0;
+    z-index: 110;
+  }
+
+  .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+    border-radius: 2px;
+  }
+
+  .mobile-menu-btn.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-menu-btn.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-btn.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Mobile Nav Drawer styling */
+  .mobile-nav {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: rgba(33, 34, 38, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-glass);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 2rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform var(--transition-normal), opacity var(--transition-normal), background-color var(--transition-normal);
+    pointer-events: none;
+    z-index: 90;
+  }
+
+  html.light-theme .mobile-nav {
+    background: rgba(244, 246, 245, 0.96);
+  }
+
+  .mobile-nav.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .mobile-nav-link {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .mobile-nav-link:hover, .mobile-nav-link.active {
+    color: var(--text-primary);
+  }
+
+  .mobile-socials-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: auto;
+  }
+
+  .mobile-social-link-btn {
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-glass);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .mobile-social-link-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-glass-hover);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  html.light-theme .mobile-social-link-btn {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  html.light-theme .mobile-social-link-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+</style>
