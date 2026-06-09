@@ -1,33 +1,24 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import ProjectCard from '@/components/ProjectCard.astro';
-import PublicationItem from '@/components/PublicationItem.astro';
-import ConferenceItem from '@/components/ConferenceItem.astro';
-import publicationsData from '@/data/publications.json';
 
+import { getCollection } from 'astro:content';
+
+import Layout from '@/layouts/Layout.astro';
+import LatestProject from '@/components/LatestProject.astro';
+import LatestPublication from '@/components/LatestPublication.astro';
+import ConferenceItem from '@/components/ConferenceItem.astro';
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-// Scientific computing highlight data
-const featuredProject = {
-  title: "Physics-Informed Neural Architecture Search",
-  description: "Investigating safety bounds and conservation-law constraints for automated deep neural network design in physical systems.",
-  tags: ["PyTorch", "AutoML", "Scientific ML", "Physics"],
-  category: "Research",
-  github: "https://github.com",
-  paper: `${baseUrl}/publications`
-};
+const projects = await getCollection('projects');
+const publications = await getCollection('publications');
 
-const featuredPublication = {
-  title: "Towards Certifiably Safe Neural Architecture Search",
-  authors: "Alex Carter, Sarah Jenkins, David Cole",
-  venue: "Journal of Machine Learning Research (JMLR), 2025",
-  year: 2025,
-  doi: "10.1007/s10462-024-00123-x",
-  pdf: "https://arxiv.org",
-  bibtex: `@article{carter2025certifiably,\n  title={Towards Certifiably Safe Neural Architecture Search},\n  author={Carter, Alex and Jenkins, Sarah and Cole, David},\n  journal={Journal of Machine Learning Research},\n  volume={26},\n  number={12},\n  pages={1--35},\n  year={2025}\n}`,
-  abstract: "Automated search algorithms for neural networks often select architectures that maximize average-case test accuracy, frequently neglecting adversarial robustness or physical safety boundary constraints. In this work, we propose a certifiable safety constraint..."
-};
+const allPubs = publications.map(pub => pub.data);
+
+// 3. Calculate total count
+const totalPublications = allPubs.length;
+
+const featuredProject = projects.find(proj => proj.data.featured === true); 
+const featuredPublication = publications.find(pub => pub.data.featured === true); 
 
 const upcomingTalk = {
   title: "Robustness Bounds in AutoML Systems for Scientific Computing",
@@ -37,11 +28,6 @@ const upcomingTalk = {
   role: "Keynote Speaker",
   link: "https://icml.cc"
 };
-
-const { preprints, journals, conferences } = publicationsData;
-
-// 1. Calculate publication count dynamically from your JSON arrays
-const totalPublications = preprints.length + journals.length + conferences.length;
 
 // 2. Keep metrics that platforms can't track static here
 const academicStats = {
@@ -65,7 +51,7 @@ const academicStats = {
           I am a Computational Scientist working at the convergence of machine learning, data analytics, geospatial analytics, and high-performance computing. My research and software development efforts span scientific machine learning, numerical simulation, large-scale geospatial data processing, and data-driven modeling on modern CPU and GPU supercomputers. I build robust, scalable, and open-source technologies that transform complex scientific data into actionable insights.
         </p>
         <div class="hero-actions">
-          <a href={`/projects`} class="btn btn-primary">
+          <a href={`${baseUrl}/projects`} class="btn btn-primary">
             Explore Projects
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -129,7 +115,20 @@ const academicStats = {
             <h3 class="col-title">Latest Project</h3>
             <a href={`${baseUrl}/projects`} class="view-all-link">All Projects &rarr;</a>
           </div>
-          <ProjectCard {...featuredProject} />
+          {featuredProject ? (
+            <LatestProject 
+              title={featuredProject.data.title}
+              description={featuredProject.data.description}
+              tags={featuredProject.data.tags || []}
+              category={featuredProject.data.category}
+              github={featuredProject.data.github}
+              paper={featuredProject.data.paper}
+              demo={featuredProject.data.demo}
+              slug={featuredProject.data.slug} 
+            />
+          ) : (
+            <p>Featured project not found.</p>
+          )}
         </div>
 
         <!-- Publication highlight -->
@@ -138,12 +137,25 @@ const academicStats = {
             <h3 class="col-title">Featured Publication</h3>
             <a href={`${baseUrl}/publications`} class="view-all-link">All Publications &rarr;</a>
           </div>
-          <PublicationItem {...featuredPublication} />
+          {featuredPublication ? (
+            <LatestPublication 
+              title={featuredPublication.data.title}
+              authors={featuredPublication.data.authors}
+              venue={featuredPublication.data.venue}
+              year={featuredPublication.data.year}
+              doi={featuredPublication.data.doi}
+              pdf={featuredPublication.data.pdf}
+              bibtex={featuredPublication.data.bibtex}
+              abstract={featuredPublication.data.abstract}
+            />
+          ) : (
+            <p>Featured publication not found.</p>
+          )}
         </div>
       </div>
       
       <!-- Upcoming talk highlight -->
-      <div class="timeline-highlight">
+      <!--<div class="timeline-highlight">
         <div class="col-header">
           <h3 class="col-title">Next Speaking Engagement</h3>
           <a href={`${baseUrl}/conferences`} class="view-all-link">All Presentations &rarr;</a>
@@ -151,7 +163,7 @@ const academicStats = {
         <div class="timeline select-none">
           <ConferenceItem {...upcomingTalk} />
         </div>
-      </div>
+      </div>-->
     </div>
   </section>
 

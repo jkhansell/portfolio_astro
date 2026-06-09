@@ -2,14 +2,22 @@
 import Layout from '@/layouts/Layout.astro';
 import PublicationItem from '@/components/PublicationItem.astro';
 // 1. Import your JSON file directly
-import publicationsData from '@/data/publications.json';
-const { preprints, journals, conferences } = publicationsData;
+import { getCollection } from 'astro:content';
+
+const publications = await getCollection('publications');
+
+// 1. Extract and filter by type
+const preprints = publications.filter(p => p.data.type === 'preprint');
+const journals = publications.filter(p => p.data.type === 'journal');
+const conferences = publications.filter(p => p.data.type === 'conference');
 
 // Optional: If you want to make absolutely sure your categories are sorted from 
 // newest to oldest by year, you can run a quick dynamic sort here:
-const sortedPreprints = preprints.sort((a, b) => b.year - a.year);
-const sortedJournals = journals.sort((a, b) => b.year - a.year);
-const sortedConferences = conferences.sort((a, b) => b.year - a.year);
+// Change your sorting logic to look at p.data.year
+const sortedPreprints = preprints.sort((a, b) => b.data.year - a.data.year);
+const sortedJournals = journals.sort((a, b) => b.data.year - a.data.year);
+const sortedConferences = conferences.sort((a, b) => b.data.year - a.data.year);
+
 
 // 1. Calculate publication count dynamically from your JSON arrays
 const totalPublications = preprints.length + journals.length + conferences.length;
@@ -63,8 +71,16 @@ const publicationStats = {
         <div class="pub-group animate-slide-up">
           <h2 class="group-title">Preprints</h2>
           <div class="pub-items-grid">
-            {sortedPreprints.map(pub => (
-              <PublicationItem {...pub} />
+            {sortedConferences.map((pub) => (
+              <PublicationItem 
+                title={pub.data.title}
+                authors={pub.data.authors}
+                venue={pub.data.venue}
+                year={pub.data.year}
+                pdf={pub.data.pdf}
+                bibtex={pub.data.bibtex}
+                abstract={pub.data.abstract}
+              />
             ))}
           </div>
         </div>
@@ -74,7 +90,15 @@ const publicationStats = {
           <h2 class="group-title">Journal Articles</h2>
           <div class="pub-items-grid">
             {sortedJournals.map(pub => (
-              <PublicationItem {...pub} />
+             <PublicationItem 
+                title={pub.data.title}
+                authors={pub.data.authors}
+                venue={pub.data.venue}
+                year={pub.data.year}
+                pdf={pub.data.pdf}
+                bibtex={pub.data.bibtex}
+                abstract={pub.data.abstract}
+              />
             ))}
           </div>
         </div>
@@ -84,7 +108,15 @@ const publicationStats = {
           <h2 class="group-title">Conference Proceedings</h2>
           <div class="pub-items-grid">
             {sortedConferences.map(pub => (
-              <PublicationItem {...pub} />
+              <PublicationItem 
+                title={pub.data.title}
+                authors={pub.data.authors}
+                venue={pub.data.venue}
+                year={pub.data.year}
+                pdf={pub.data.pdf}
+                bibtex={pub.data.bibtex}
+                abstract={pub.data.abstract}
+              />
             ))}
           </div>
         </div>

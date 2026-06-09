@@ -1,5 +1,5 @@
 ---
-// src/components/ProjectCard.astro
+// src/components/LatestProject.astro
 interface Props {
   title: string;
   description: string;
@@ -12,7 +12,6 @@ interface Props {
 }
 
 const { title, description, tags, category, slug, github, demo, paper } = Astro.props;
-
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 
