@@ -4,11 +4,12 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
+    site: "https://jkhansell.github.io",
+    base: "/portfolio_astro",
     markdown: {
         processor: unified({
             remarkPlugins: [remarkMath],
             rehypePlugins: [[rehypeKatex, { output: 'html' }]],
         }),
     },
-    site: "https://jkhansell.github.io/portfolio_astro/",
 });
