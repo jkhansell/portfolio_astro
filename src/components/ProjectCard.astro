@@ -12,6 +12,11 @@ interface Props {
 }
 
 const { title, description, tags, category, slug, github, demo, paper } = Astro.props;
+
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+
 ---
 
 <article class="glass-container project-card" data-category={category}>
@@ -19,7 +24,7 @@ const { title, description, tags, category, slug, github, demo, paper } = Astro.
     <div class="project-header">
       <span class="badge badge-accent project-category">{category}</span>
       <h3 class="project-title">
-        <a href={`/projects/${slug}`} class="project-page-link">{title}</a>
+        <a href={`${baseUrl}/projects/${slug}`} class="project-page-link">{title}</a>
       </h3>
     </div>
     
