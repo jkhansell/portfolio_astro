@@ -95,7 +95,8 @@ const socials = [
 
 <style>
   .glass-footer {
-    background: rgba(3, 7, 18, 0.9);
+    /* Use your theme-aware glass background */
+    background: var(--bg-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--border-glass);
@@ -127,6 +128,7 @@ const socials = [
   .footer-title {
     font-size: 1.5rem;
     font-weight: 800;
+    color: var(--text-primary);
   }
 
   .logo-accent {
@@ -143,7 +145,7 @@ const socials = [
   .footer-heading {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-primary);
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
@@ -158,10 +160,11 @@ const socials = [
     font-size: 0.95rem;
     color: var(--text-secondary);
     width: fit-content;
+    transition: var(--transition-fast);
   }
 
   .footer-link:hover {
-    color: #ffffff;
+    color: var(--primary);
     transform: translateX(4px);
   }
 
@@ -185,19 +188,19 @@ const socials = [
     height: 38px;
     border-radius: 8px;
     border: 1px solid var(--border-glass);
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-glass);
     transition: var(--transition-fast);
   }
 
   .footer-social-btn:hover {
-    color: #ffffff;
+    color: var(--text-primary);
     border-color: var(--border-glass-hover);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+    background: var(--bg-glass-hover);
+    box-shadow: var(--shadow-glow);
   }
 
   .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border-glass);
     padding-top: 1.5rem;
   }
 

@@ -1,7 +1,7 @@
 ---
 title: "PyExner: A Multi-GPU hydro-morphodynamics solver in JAX"
 description: "PyExner is a high-performance numerical framework designed to solve the coupled Shallow Water–Exner (SWE–Exner) system, enabling the simultaneous simulation of water flow and riverbed evolution. By leveraging modern high-performance computing (HPC) ecosystems, the project bridges the gap between rapid scientific prototyping and production-grade execution on GPU supercomputers."
-category: "Research"
+category: "Software"
 tags: ["Environmental Modeling", "Renewable Energy", "JAX", "Computational Hydraulics", "Numerical Methods"]
 slug: "PyExner"
 github: "https://github.com/jkhansell/PyExner"

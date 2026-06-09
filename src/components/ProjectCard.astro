@@ -64,7 +64,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 370px; 
     position: relative;
+    padding: 1.25rem;
+    border-radius: 16px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
     transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
   }
 
@@ -84,7 +89,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   .project-title {
     font-size: 1.25rem;
-    color: #ffffff;
+    color: var(--text-primary);
     font-weight: 700;
   }
 
@@ -98,16 +103,23 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 1; /* Covers the card area */
-    border-radius: 12px;
+    z-index: 1; 
+    border-radius: 16px;
   }
 
+  /* Updated: Truncate description to keep cards uniform in height */
   .project-desc {
     font-size: 0.95rem;
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
     flex-grow: 1;
+    
+    /* Clamping to 4 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .project-tags {
@@ -116,7 +128,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
     gap: 0.5rem;
     margin-bottom: 1.5rem;
     position: relative;
-    z-index: 2; /* Keeps text highlighted above clickable overlay paths */
+    z-index: 2; 
   }
 
   .project-links {
@@ -125,7 +137,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
     flex-wrap: wrap;
     margin-top: auto;
     position: relative;
-    z-index: 5; /* Forces button links to sit on top of card click overlay layer */
+    z-index: 5; 
   }
 
   .btn-sm {
@@ -135,5 +147,13 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    background: var(--bg-main);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    transition: var(--transition-fast);
+  }
+  
+  .btn-sm:hover {
+    background: var(--bg-glass-hover);
   }
 </style>
